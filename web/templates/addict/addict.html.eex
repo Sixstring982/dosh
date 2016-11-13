@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>User Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+  </head>
+
+  <body class="blue-grey darken-2">
+    <nav>
+      <div class="nav-wrapper">
+        <a href="/login" class="brand-logo">Dosh</a>
+      </div>
+    </nav>
+    <input type="hidden" id="csrf-token" value="<%= @csrf_token %>">
+
+    <main role="main">
+      <%= render @view_module, @view_template, assigns %>
+    </main>
+
+    <script type="text/javascript">
+
+      var btn_register = document.getElementById("btn-register");
+      var btn_logout = document.getElementById("btn-logout");
+      var btn_login = document.getElementById("btn-login");
+      var btn_reset = document.getElementById("btn-reset-password");
+      var btn_send = document.getElementById("btn-send-reset-password-link");
+
+      function navigateToRoot() {
+        window.location.href = "/";
+      }
+
+      function addErrors(errors) {
+        var el = document.getElementsByClassName('errors')[0];
+
+        function appendError(error_message, el) {
+          var el_error = document.createElement("p");
+          el_error.setAttribute("class", "addict error-message");
+          el_error.innerText = error_message;
+          el.appendChild(el_error);
+        }
+
+        if (errors) {
+          errors = errors.errors;
+          var i = errors.length - 1;
+          errors.forEach(function(error) {
+            appendError(error.message, el);
+          });
+        } else {
+          appendError("Something went wrong, please try again", el);
+        }
+      }
+
+      function clearErrors() {
+        var el = document.getElementsByClassName('errors')[0];
+        el.childNodes.length > 0 && Array.prototype.slice.call(el.childNodes).forEach(function(node){
+          el.removeChild(node);
+        });
+      }
+
+      function makeRequest(url, data, csrf_token, success_callback, failure_callback, method) {
+        clearErrors();
+        method = method || "POST";
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open(method, url);
+        xmlHttp.setRequestHeader("x-csrf-token", csrf_token);
+        xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xmlHttp.onreadystatechange = function() {
+          if (xmlHttp.readyState == 4) {
+            if (xmlHttp.status >= 200 && xmlHttp.status < 400) {
+              success_callback && success_callback();
+            } else if (xmlHttp.status >= 400 && xmlHttp.status < 500){
+              failure_callback && failure_callback(JSON.parse(xmlHttp.responseText));
+            } else {
+              failure_callback && failure_callback(null);
+            }
+          }
+        }
+        xmlHttp.send(JSON.stringify(data));
+      }
+
+      if(btn_register){
+        document.getElementById("btn-register").addEventListener("click", function(ev) {
+          var name = document.getElementById('txt-name').value;
+          var email = document.getElementById('txt-email').value;
+          var password = document.getElementById('txt-password').value;
+          var csrf_token = document.getElementById('csrf-token').value;
+          var params = {
+            name: name,
+            email: email,
+            password: password
+          };
+          makeRequest('/register', params, csrf_token, navigateToRoot, addErrors);
+        }, false);
+      }
+
+      if(btn_logout){
+        document.getElementById("btn-logout").addEventListener("click", function(ev) {
+          var csrf_token = document.getElementById('csrf-token').value;
+          makeRequest('/logout', {}, csrf_token, navigateToRoot, null, "DELETE");
+        }, false);
+      }
+
+      if(btn_login){
+        document.getElementById("btn-login").addEventListener("click", function(ev) {
+          var email = document.getElementById('txt-email').value;
+          var password = document.getElementById('txt-password').value;
+          var csrf_token = document.getElementById('csrf-token').value;
+          var params = {
+            email: email,
+            password: password
+          };
+          makeRequest('/login', params, csrf_token, navigateToRoot, addErrors);
+        }, false);
+      }
+
+      if(btn_reset){
+        document.getElementById("btn-reset-password").addEventListener("click", function(ev) {
+          var password = document.getElementById('txt-password').value;
+          var token = document.getElementById('token').value;
+          var signature = document.getElementById('signature').value;
+          var csrf_token = document.getElementById('csrf-token').value;
+
+          var params = {
+            signature: signature,
+            token: token,
+            password: password
+          };
+          makeRequest('/reset_password', params, csrf_token, navigateToRoot, addErrors);
+        }, false);
+      }
+
+      if(btn_send){
+        document.getElementById("btn-send-reset-password-link").addEventListener("click", function(ev) {
+          var email = document.getElementById('txt-email').value;
+          var csrf_token = document.getElementById('csrf-token').value;
+
+          var params = { email: email };
+          makeRequest('/recover_password', params, csrf_token, navigateToRoot, addErrors);
+        }, false);
+      }
+
+    </script>
+  </body>
+</html>

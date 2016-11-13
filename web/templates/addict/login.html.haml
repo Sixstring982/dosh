@@ -1,0 +1,46 @@
+.container
+  .row
+    .col.s6.offset-s3
+      .card.white.black-text
+        .card-content
+          %span.card-title Login
+          .row
+            .col.s12.input-field
+              %input#txt-email.validate{type: "text"}
+              %label{for: 'txt-email'} E-mail
+          .row
+            .col.s12.input-field
+              %input#txt-password.validate{type: "password"}
+              %label{for: 'txt-password'} Password
+          .row
+            .col.s12.addict.errors
+          .row
+            .col.s12.input-field
+              %a#btn-login.waves-effect.waves-light.btn Login
+        .card-action
+          %a{href: "/register"} Register
+/
+  <h1 style="text-align: center">Login</h1>
+  <div class="addict container">
+    <div class="addict modal">
+      <div class="addict modal__form">
+        <div class="addict modal__fields">
+          <div class="addict field">
+            <input type="text" id="txt-email" class="addict input" required />
+            <label for="txt-email" class="addict label">E-mail</label>
+          </div>
+          <div class="addict field">
+            <input type="password" id="txt-password" class="addict input" required />
+            <label for="txt-password" class="addict label">Password</label>
+          </div>
+          <div class="addict errors"></div>
+          <div class="addict modal__footer">
+            <button id="btn-login" class="addict btn">Login</button>
+          </div>
+          <a class="addict link" href="/recover_password">Forgot your password?</a>
+          <br>
+          <a class="addict link" href="/register">Need an account?</a>
+        </div>
+       </div>
+    </div>
+  </div>

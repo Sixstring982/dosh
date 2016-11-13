@@ -1,0 +1,16 @@
+= form_for @changeset, @action, fn f ->
+  = if @changeset.action do
+    .alert.alert-danger
+      %p Something went wrong. Check the errors below.
+  = end
+
+  .input-field
+    = label f, :name
+    = text_input f, :name, class: "validate"
+    = error_tag f, :name
+
+  .input-field
+    = label f, :credit
+    = checkbox f, :credit
+    = error_tag f, :credit
+= end
