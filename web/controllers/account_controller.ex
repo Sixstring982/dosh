@@ -10,7 +10,10 @@ defmodule Dosh.AccountController do
 
   def new(conn, _params) do
     changeset = Account.changeset(%Account{})
-    render(conn, "new.html", changeset: changeset)
+    conn
+    |> assign(:user_id, Addict.Helper.current_user(conn).id)
+    |> assign(:changeset, changeset)
+    |> render("new.html")
   end
 
   def create(conn, %{"account" => account_params}) do
@@ -34,7 +37,9 @@ defmodule Dosh.AccountController do
   def edit(conn, %{"id" => id}) do
     account = Repo.get!(Account, id)
     changeset = Account.changeset(account)
-    render(conn, "edit.html", account: account, changeset: changeset)
+    conn
+    |> assign(:user_id, Addict.Helper.current_user(conn).id)
+    |> render("edit.html", account: account, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "account" => account_params}) do

@@ -18,8 +18,11 @@ defmodule Dosh.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/chart.json", PageController, :show
     resources "/users", UserController
     resources "/accounts", AccountController
+    resources "/transactions", TransactionController
+    resources "/recurrences", RecurrenceController
   end
 
   scope "/" do

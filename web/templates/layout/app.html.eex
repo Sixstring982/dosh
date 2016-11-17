@@ -16,6 +16,7 @@
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
   crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
 
 <body class="blue-grey darken-2">
 <nav>

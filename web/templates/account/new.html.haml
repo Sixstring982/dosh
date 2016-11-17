@@ -1,9 +1,9 @@
 .container
   .row
-    .col.s12
+    .col.s6.offset-s3
       .card.white.black-text
         .card-content
           %span.card-title New Account
-          = render "form.html", changeset: @changeset, action: account_path(@conn, :create)
+          = render "form.html", user_id: @user_id, changeset: @changeset, action: account_path(@conn, :create)
         .card-action
           = link "Back", to: account_path(@conn, :index)

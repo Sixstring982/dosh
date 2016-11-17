@@ -1,0 +1,6 @@
+<h2>Edit recurrence</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: recurrence_path(@conn, :update, @recurrence) %>
+
+<%= link "Back", to: recurrence_path(@conn, :index) %>

@@ -20,3 +20,6 @@ import "phoenix_html"
 
 // import socket from "./socket"
 import logout from './logout'
+import select from './select'
+import chart from './chart'
+import datepicker from './datepicker';

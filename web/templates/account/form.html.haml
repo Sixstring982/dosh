@@ -4,13 +4,30 @@
       %p Something went wrong. Check the errors below.
   = end
 
-  .input-field
-    = label f, :name
-    = text_input f, :name, class: "validate"
-    = error_tag f, :name
+  .row
+    .col.s12
+      .input-field
+        = label f, :name
+        = text_input f, :name, class: "validate"
+        = error_tag f, :name
+  .row
+    .col.s12
+      .input-field
+        = checkbox f, :credit
+        = label f, :credit
+        = error_tag f, :credit
+
+  .row
+    .col.s12
+      .input-field
+        = date_select f, :due_date
+        = label f, :due_date
+        = error_tag f, :due_date
 
   .input-field
-    = checkbox f, :credit
-    = error_tag f, :credit
-    = label f, :credit
+    = hidden_input f, :user_id, value: @user_id
+
+  .input-field
+    = submit "Submit", class: "btn btn-primary"
+
 = end

@@ -3,7 +3,11 @@
     .col.s6.offset-s3
       .card.white.black-text
         .card-content
-          %span.card-title Login
+          %span.card-title Register
+          .row
+            .col.s12.input-field
+              %input#txt-name.validate{type: "text"}
+              %label{for: 'txt-name'} Name
           .row
             .col.s12.input-field
               %input#txt-email.validate{type: "text"}
@@ -16,6 +20,6 @@
             .col.s12.addict.errors
           .row
             .col.s12.input-field
-              %a#btn-login.waves-effect.waves-light.btn Login
+              %a#btn-register.waves-effect.waves-light.btn Register
         .card-action
-          %a{href: "/register"} Register
+          %a{href: "/login"} Login

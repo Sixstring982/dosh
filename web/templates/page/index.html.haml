@@ -1,16 +1,48 @@
 .container
   .row
-    .col.s4
+    .col.s5
+      .row
+        .col.s12
+          .card.white.black-text
+            .card-content
+              %span.card-title Accounts
+              %ul.collection
+                = for account <- @accounts do
+                  %li.collection-item.avatar
+                    %i.material-icons.circle= if account.credit do "credit_card" else "lock_outline" end
+                    %span.title= account.name
+                    %p
+                      $
+                      = Dosh.Account.balance(account)
+                    = link to: account_path(@conn, :edit, account), class: "secondary-content" do
+                      %i.material-icons mode_edit
+                    = end
+                = end
+              %a.btn-floating.btn-large.waves-effect.waves-light.red{href: "/accounts/new"}
+                %i.material-icons add
+      .row
+        .col.s12
+          .card.white.black-text
+            .card-content
+              %span.card-title Recurring Transactions
+              %ul.collection
+                = for recurrence <- @recurrences do
+                  %li.collection-item
+                    %div
+                      %span.title= recurrence.name
+                      .secondary-content= recurrence.amount
+                = end
+              %a.btn-floating.btn-large.waves-effect.waves-light.red{href: "recurrences/new"}
+                %i.material-icons add
+    .col.s7
       .card.white.black-text
         .card-content
-          .card-title Accounts
-          %ul.collection.with-header
-            = for account <- @accounts do
-              %li.collection-item
-                %div= account.name
-                  = link to: account_path(@conn, :edit, account), class: "secondary-content" do
-                    %i.material-icons mode_edit
-                  = end
-            = end
-          %a.btn-floating.btn-large.waves-effect.waves-light.red{href: "/accounts/new"}
-            %i.material-icons add
+          .card-title Forecast
+          #forecast-root
+          .row
+            .col.s6
+              %input#from-date.datepicker{type: "date"}
+              %label{for: 'from-date'} From
+            .col.s6
+              %input#to-date.datepicker{type: "date"}
+              %label{for: 'to-date'} To

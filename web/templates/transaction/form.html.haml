@@ -1,0 +1,44 @@
+= form_for @changeset, @action, fn f ->
+  = if @changeset.action do
+    .alert.alert-danger
+      %p Something went wrong. Check the errors below.
+  = end
+
+  .row
+    .col.s12
+      .input-field
+        = number_input f, :amount, step: "0.01"
+        = label f, :amount
+
+  .row
+    .col.s12
+      .input-field
+        = select f, :account_id, @account_map, prompt: "Choose an account"
+
+  .row
+    .col.s12
+      .input-field
+        = date_select f, :happened_at, builder: fn b ->
+          .row
+            .col.s3
+              = b.(:day, [])
+            .col.s1 /
+            .col.s3
+              = b.(:month, [])
+            .col.s1 /
+            .col.s3
+              = b.(:year, [])
+        = end
+
+  .row
+    .col.s12
+      .input-field
+        = text_input f, :note
+        = label f, :note
+        = error_tag f, :note
+
+  .row
+    .col.s12
+      .input-field
+        = submit "Submit", class: "btn btn-primary"
+= end

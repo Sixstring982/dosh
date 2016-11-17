@@ -1,0 +1,28 @@
+<h2>Show recurrence</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @recurrence.name %>
+  </li>
+
+  <li>
+    <strong>Amount:</strong>
+    <%= @recurrence.amount %>
+  </li>
+
+  <li>
+    <strong>Day of month:</strong>
+    <%= @recurrence.day_of_month %>
+  </li>
+
+  <li>
+    <strong>Account:</strong>
+    <%= @recurrence.account_id %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: recurrence_path(@conn, :edit, @recurrence) %>
+<%= link "Back", to: recurrence_path(@conn, :index) %>

@@ -1,0 +1,32 @@
+<h2>Listing recurrences</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Amount</th>
+      <th>Day of month</th>
+      <th>Account</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for recurrence <- @recurrences do %>
+    <tr>
+      <td><%= recurrence.name %></td>
+      <td><%= recurrence.amount %></td>
+      <td><%= recurrence.day_of_month %></td>
+      <td><%= recurrence.account_id %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: recurrence_path(@conn, :show, recurrence), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: recurrence_path(@conn, :edit, recurrence), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: recurrence_path(@conn, :delete, recurrence), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New recurrence", to: recurrence_path(@conn, :new) %>
