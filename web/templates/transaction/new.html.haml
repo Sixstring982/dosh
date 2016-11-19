@@ -4,5 +4,5 @@
       .card.white.black-text
         .card-content
           %span.card-title New Transaction
-          = render "form.html", account_map: @account_map, changeset: @changeset, action: transaction_path(@conn, :create)
+          = render "form.html", date: Ecto.Date.utc, account_map: @account_map, changeset: @changeset, action: transaction_path(@conn, :create)
           = link "Back", to: page_path(@conn, :index)

@@ -13,8 +13,8 @@
   </li>
 
   <li>
-    <strong>Due date:</strong>
-    <%= @account.due_date %>
+    <strong>Day of month:</strong>
+    <%= @account.day_of_month %>
   </li>
 
   <li>

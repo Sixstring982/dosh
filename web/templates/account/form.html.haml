@@ -7,9 +7,14 @@
   .row
     .col.s12
       .input-field
-        = label f, :name
         = text_input f, :name, class: "validate"
+        = label f, :name
         = error_tag f, :name
+
+  .row
+    .col.s12
+      .input-field
+        = select f, :payee_account_id, @account_map, prompt: "Choose a payee account"
   .row
     .col.s12
       .input-field
@@ -20,9 +25,9 @@
   .row
     .col.s12
       .input-field
-        = date_select f, :due_date
-        = label f, :due_date
-        = error_tag f, :due_date
+        = number_input f, :day_of_month, min: "0", step: "1"
+        = label f, :day_of_month
+        = error_tag f, :day_of_month
 
   .input-field
     = hidden_input f, :user_id, value: @user_id

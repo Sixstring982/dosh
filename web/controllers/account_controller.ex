@@ -4,19 +4,24 @@ defmodule Dosh.AccountController do
   alias Dosh.Account
 
   def index(conn, _params) do
-    accounts = Repo.all(Account)
+    accounts = Dosh.User.accounts(conn)
     render(conn, "index.html", accounts: accounts)
   end
 
   def new(conn, _params) do
+    accounts = Dosh.User.accounts(conn)
+    account_map = Enum.zip(Enum.map(accounts, &(&1.name)), Enum.map(accounts, &(&1.id)))
     changeset = Account.changeset(%Account{})
     conn
     |> assign(:user_id, Addict.Helper.current_user(conn).id)
+    |> assign(:account_map, account_map)
     |> assign(:changeset, changeset)
     |> render("new.html")
   end
 
   def create(conn, %{"account" => account_params}) do
+    accounts = Dosh.User.accounts(conn)
+    account_map = Enum.zip(Enum.map(accounts, &(&1.name)), Enum.map(accounts, &(&1.id)))
     changeset = Account.changeset(%Account{}, account_params)
 
     case Repo.insert(changeset) do
@@ -25,7 +30,7 @@ defmodule Dosh.AccountController do
         |> put_flash(:info, "Account created successfully.")
         |> redirect(to: account_path(conn, :index))
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, account_map: account_map)
     end
   end
 
@@ -36,10 +41,12 @@ defmodule Dosh.AccountController do
 
   def edit(conn, %{"id" => id}) do
     account = Repo.get!(Account, id)
+    accounts = Dosh.User.accounts(conn)
+    account_map = Enum.zip(Enum.map(accounts, &(&1.name)), Enum.map(accounts, &(&1.id)))
     changeset = Account.changeset(account)
     conn
     |> assign(:user_id, Addict.Helper.current_user(conn).id)
-    |> render("edit.html", account: account, changeset: changeset)
+    |> render("edit.html", account: account, changeset: changeset, account_map: account_map)
   end
 
   def update(conn, %{"id" => id, "account" => account_params}) do

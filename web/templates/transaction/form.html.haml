@@ -18,7 +18,7 @@
   .row
     .col.s12
       .input-field
-        = date_select f, :happened_at, builder: fn b ->
+        = date_select f, :happened_at, value: @date, builder: fn b ->
           .row
             .col.s3
               = b.(:day, [])

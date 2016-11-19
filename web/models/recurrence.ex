@@ -3,7 +3,7 @@ defmodule Dosh.Recurrence do
 
   schema "recurrences" do
     field :name, :string
-    field :amount, :integer
+    field :amount, :float
     field :day_of_month, :integer
     field :repeat_period, :integer
     field :start_date, Ecto.Date

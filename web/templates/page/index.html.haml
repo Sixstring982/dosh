@@ -14,9 +14,13 @@
                     %p
                       $
                       = Dosh.Account.balance(account)
-                    = link to: account_path(@conn, :edit, account), class: "secondary-content" do
-                      %i.material-icons mode_edit
-                    = end
+                    .secondary-content
+                      = link to: account_path(@conn, :edit, account) do
+                        %i.material-icons mode_edit
+                      = end
+                      = link to: transaction_path(@conn, :new) do
+                        %i.material-icons +
+                      = end
                 = end
               %a.btn-floating.btn-large.waves-effect.waves-light.red{href: "/accounts/new"}
                 %i.material-icons add

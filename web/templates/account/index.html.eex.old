@@ -5,7 +5,7 @@
     <tr>
       <th>Name</th>
       <th>Credit</th>
-      <th>Due date</th>
+      <th>Day of month</th>
       <th>User</th>
 
       <th></th>
@@ -16,7 +16,7 @@
     <tr>
       <td><%= account.name %></td>
       <td><%= account.credit %></td>
-      <td><%= account.due_date %></td>
+      <td><%= account.day_of_month %></td>
       <td><%= account.user_id %></td>
 
       <td class="text-right">

@@ -4,5 +4,5 @@
       .card.white.black-text
         .card-content
           %span.card-title Edit Transaction
-          = render "form.html", account_map: @account_map, changeset: @changeset, action: transaction_path(@conn, :update, @transaction)
+          = render "form.html", date: @transaction.happened_at, account_map: @account_map, changeset: @changeset, action: transaction_path(@conn, :update, @transaction)
           = link "Back", to: page_path(@conn, :index)

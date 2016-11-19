@@ -4,5 +4,5 @@
       .card.white.black-text
         .card-content
           %span.card-title Edit Account
-          = render "form.html", user_id: @user_id, changeset: @changeset, action: account_path(@conn, :update, @account)
+          = render "form.html", account_map: @account_map, user_id: @user_id, changeset: @changeset, action: account_path(@conn, :create)
           = link "Back", to: page_path(@conn, :index)

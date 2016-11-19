@@ -16,6 +16,8 @@ defmodule Dosh.RecurrenceController do
   end
 
   def create(conn, %{"recurrence" => recurrence_params}) do
+    accounts = Dosh.User.accounts(conn)
+    account_map = Enum.zip(Enum.map(accounts, &(&1.name)), Enum.map(accounts, &(&1.id)))
     changeset = Recurrence.changeset(%Recurrence{}, recurrence_params)
 
     case Repo.insert(changeset) do
@@ -24,7 +26,7 @@ defmodule Dosh.RecurrenceController do
         |> put_flash(:info, "Recurrence created successfully.")
         |> redirect(to: recurrence_path(conn, :index))
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, account_map: account_map)
     end
   end
 
