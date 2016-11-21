@@ -3,7 +3,14 @@
     .col.l8.offset-l2.s12
       .card.white.black-text
         .card-content
-          %span.card-title Transactions
+          %span.card-title
+            .row
+              .col.s10 Transactions
+              .col.s2
+                = link to: transaction_path(@conn, :new) do
+                  .btn-floating.btn-med.waves-effect.waves-light.red
+                    %i.material-icons add
+            = end
           %ul.collection
             = for transaction <- @transactions do
               %li.collection-item
