@@ -23,7 +23,7 @@
                   .col.l1.s2= link to: transaction_path(@conn, :edit, transaction) do
                     %i.material-icons mode_edit
                   = end
-                  .col.l1.s2= link to: transaction_path(@conn, :edit, transaction) do
+                  .col.l1.s2= link to: transaction_path(@conn, :delete, transaction), method: :delete, data: [confirm: "Are you sure?"] do
                     %i.material-icons delete
                   = end
             = end
