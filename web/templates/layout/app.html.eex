@@ -6,7 +6,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Hello Dosh!</title>
+<title>Dosh Spending Tracker</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
@@ -22,7 +22,7 @@
 <nav>
   <div class="nav-wrapper">
     <a href="/" class="brand-logo">Dosh</a>
-    <ul id="nav-mobile" class="right hide-on-med-and-down">
+    <ul id="nav-mobile" class="right">
       <li>
         <a href="#" class="logout-link">Logout</a>
       </li>

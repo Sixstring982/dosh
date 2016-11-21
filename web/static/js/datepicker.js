@@ -11,7 +11,9 @@ const fromPicker = $('#from-date').pickadate({
         }
     }
 }).pickadate('picker');
-fromPicker.set('select', fromDate.getTime());
+if (fromPicker) {
+    fromPicker.set('select', fromDate.getTime());
+}
 
 const toPicker = $('#to-date').pickadate({
     onSet: e => {
@@ -21,4 +23,6 @@ const toPicker = $('#to-date').pickadate({
         }
     }
 }).pickadate('picker');
-toPicker.set('select', toDate.getTime());
+if (toPicker) {
+    toPicker.set('select', toDate.getTime());
+}

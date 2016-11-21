@@ -7,3 +7,22 @@
 #forecase-data {
     display: none;
 }
+
+p.alert {
+    margin: 0 auto;
+    width: 50%;
+    text-align: center;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    transition: all 500ms ease-in-out;
+}
+
+p.alert.alert-info {
+    background-color: #b3e5fc;
+    color: #0277bd;
+}
+
+p.alert.alert-danger {
+    background-color: #ffcdd2;
+    color: #c62828;
+}

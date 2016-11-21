@@ -1,44 +1,59 @@
 .container
   .row
-    .col.s5
+    .col.l5.s12
       .row
         .col.s12
           .card.white.black-text
             .card-content
-              %span.card-title Accounts
+              %span.card-title
+                .row
+                  .col.s10 Accounts
+                  .col.s2
+                    %a.btn-floating.btn-med.waves-effect.waves-light.red{href: "/accounts/new"}
+                      %i.material-icons add
               %ul.collection
                 = for account <- @accounts do
-                  %li.collection-item.avatar
-                    %i.material-icons.circle= if account.credit do "credit_card" else "lock_outline" end
+                  %li.collection-item
                     %span.title= account.name
-                    %p
-                      $
-                      = Dosh.Account.balance(account)
                     .secondary-content
                       = link to: account_path(@conn, :edit, account) do
                         %i.material-icons mode_edit
                       = end
-                      = link to: transaction_path(@conn, :new) do
-                        %i.material-icons +
-                      = end
                 = end
-              %a.btn-floating.btn-large.waves-effect.waves-light.red{href: "/accounts/new"}
-                %i.material-icons add
       .row
         .col.s12
           .card.white.black-text
             .card-content
-              %span.card-title Recurring Transactions
+              %span.card-title
+                .row
+                  .col.s10 Transactions
+                  .col.s2
+                    %a.btn-floating.btn-med.waves-effect.waves-light.red{href: "transactions/new"}
+                      %i.material-icons add
+            .card-action
+              %a{href: "transactions/"} View
+      .row
+        .col.s12
+          .card.white.black-text
+            .card-content
+              %span.card-title
+                .row
+                  .col.s10 Recurring Transactions
+                  .col.s2
+                    %a.btn-floating.btn-med.waves-effect.waves-light.red{href: "recurrences/new"}
+                      %i.material-icons add
               %ul.collection
                 = for recurrence <- @recurrences do
                   %li.collection-item
-                    %div
-                      %span.title= recurrence.name
-                      .secondary-content= recurrence.amount
+                    .row
+                      .col.s6= recurrence.name
+                      .col.s3= recurrence.amount
+                      .col.s3
+                        = link to: recurrence_path(@conn, :edit, recurrence) do
+                          %i.material-icons mode_edit
+                        = end
                 = end
-              %a.btn-floating.btn-large.waves-effect.waves-light.red{href: "recurrences/new"}
-                %i.material-icons add
-    .col.s7
+    .col.l7.s12
       .card.white.black-text
         .card-content
           .card-title Forecast

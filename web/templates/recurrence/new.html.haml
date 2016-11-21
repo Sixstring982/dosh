@@ -1,8 +1,8 @@
 .container
   .row
-    .col.s6.offset-s3
+    .col.l6.offset-l3.s12
       .card.white.black-text
         .card-content
           %span.card-title New Recurring Transaction
-          = render "form.html", account_map: @account_map, changeset: @changeset, action: recurrence_path(@conn, :create)
+          = render "form.html", account_map: @account_map, changeset: @changeset, action: recurrence_path(@conn, :create), conn: @conn, date: Ecto.Date.utc
           = link "Back", to: page_path(@conn, :index)

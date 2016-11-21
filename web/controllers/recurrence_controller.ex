@@ -4,20 +4,18 @@ defmodule Dosh.RecurrenceController do
   alias Dosh.Recurrence
 
   def index(conn, _params) do
-    recurrences = Repo.all(Recurrence)
+    recurrences = Dosh.User.recurrences(conn)
     render(conn, "index.html", recurrences: recurrences)
   end
 
   def new(conn, _params) do
-    accounts = Dosh.User.accounts(conn)
-    account_map = Enum.zip(Enum.map(accounts, &(&1.name)), Enum.map(accounts, &(&1.id)))
+    account_map = Dosh.User.account_map conn
     changeset = Recurrence.changeset(%Recurrence{})
     render(conn, "new.html", account_map: account_map, changeset: changeset)
   end
 
   def create(conn, %{"recurrence" => recurrence_params}) do
-    accounts = Dosh.User.accounts(conn)
-    account_map = Enum.zip(Enum.map(accounts, &(&1.name)), Enum.map(accounts, &(&1.id)))
+    account_map = Dosh.User.account_map conn
     changeset = Recurrence.changeset(%Recurrence{}, recurrence_params)
 
     case Repo.insert(changeset) do
@@ -36,16 +34,14 @@ defmodule Dosh.RecurrenceController do
   end
 
   def edit(conn, %{"id" => id}) do
-    accounts = Dosh.User.accounts(conn)
-    account_map = Enum.zip(Enum.map(accounts, &(&1.name)), Enum.map(accounts, &(&1.id)))
+    account_map = Dosh.User.account_map conn
     recurrence = Repo.get!(Recurrence, id)
     changeset = Recurrence.changeset(recurrence)
     render(conn, "edit.html", account_map: account_map, recurrence: recurrence, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "recurrence" => recurrence_params}) do
-    accounts = Dosh.User.accounts(conn)
-    account_map = Enum.zip(Enum.map(accounts, &(&1.name)), Enum.map(accounts, &(&1.id)))
+    account_map = Dosh.User.account_map conn
     recurrence = Repo.get!(Recurrence, id)
     changeset = Recurrence.changeset(recurrence, recurrence_params)
 
@@ -53,7 +49,7 @@ defmodule Dosh.RecurrenceController do
       {:ok, recurrence} ->
         conn
         |> put_flash(:info, "Recurrence updated successfully.")
-        |> redirect(to: recurrence_path(conn, :show, recurrence))
+        |> redirect(to: page_path(conn, :index)) #recurrence_path(conn, :show, recurrence))
       {:error, changeset} ->
         render(conn, "edit.html", account_map: account_map, recurrence: recurrence, changeset: changeset)
     end

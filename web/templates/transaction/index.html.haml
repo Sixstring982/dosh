@@ -1,0 +1,22 @@
+.container
+  .row
+    .col.l8.offset-l2.s12
+      .card.white.black-text
+        .card-content
+          %span.card-title Transactions
+          %ul.collection
+            = for transaction <- @transactions do
+              %li.collection-item
+                .row
+                  .col.l2.s5= transaction.happened_at
+                  .col.l6.s7= transaction.note
+                  .col.l2.s8
+                    $
+                    = transaction.amount
+                  .col.l1.s2= link to: transaction_path(@conn, :edit, transaction) do
+                    %i.material-icons mode_edit
+                  = end
+                  .col.l1.s2= link to: transaction_path(@conn, :edit, transaction) do
+                    %i.material-icons delete
+                  = end
+            = end

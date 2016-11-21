@@ -4,18 +4,18 @@ defmodule Dosh.TransactionController do
   alias Dosh.Transaction
 
   def index(conn, _params) do
-    transactions = Repo.all(Transaction)
+    transactions = Dosh.User.transactions(conn)
     render(conn, "index.html", transactions: transactions)
   end
 
   def new(conn, _params) do
-    accounts = Dosh.User.accounts(conn)
-    account_map = Enum.zip(Enum.map(accounts, &(&1.name)), Enum.map(accounts, &(&1.id)))
+    account_map = Dosh.User.account_map conn
     changeset = Transaction.changeset(%Transaction{})
     render(conn, "new.html", changeset: changeset, account_map: account_map)
   end
 
   def create(conn, %{"transaction" => transaction_params}) do
+    account_map = Dosh.User.account_map conn
     changeset = Transaction.changeset(%Transaction{}, transaction_params)
 
     case Repo.insert(changeset) do
@@ -24,7 +24,7 @@ defmodule Dosh.TransactionController do
         |> put_flash(:info, "Transaction created successfully.")
         |> redirect(to: transaction_path(conn, :index))
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, account_map: account_map)
     end
   end
 
@@ -34,16 +34,14 @@ defmodule Dosh.TransactionController do
   end
 
   def edit(conn, %{"id" => id}) do
-    accounts = Dosh.User.accounts(conn)
-    account_map = Enum.zip(Enum.map(accounts, &(&1.name)), Enum.map(accounts, &(&1.id)))
+    account_map = Dosh.User.account_map conn
     transaction = Repo.get!(Transaction, id)
     changeset = Transaction.changeset(transaction)
     render(conn, "edit.html", account_map: account_map, transaction: transaction, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "transaction" => transaction_params}) do
-    accounts = Dosh.User.accounts(conn)
-    account_map = Enum.zip(Enum.map(accounts, &(&1.name)), Enum.map(accounts, &(&1.id)))
+    account_map = Dosh.User.account_map conn
     transaction = Repo.get!(Transaction, id)
     changeset = Transaction.changeset(transaction, transaction_params)
 

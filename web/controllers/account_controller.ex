@@ -20,6 +20,7 @@ defmodule Dosh.AccountController do
   end
 
   def create(conn, %{"account" => account_params}) do
+    user_id = Dosh.User.user_id conn
     accounts = Dosh.User.accounts(conn)
     account_map = Enum.zip(Enum.map(accounts, &(&1.name)), Enum.map(accounts, &(&1.id)))
     changeset = Account.changeset(%Account{}, account_params)
@@ -30,7 +31,7 @@ defmodule Dosh.AccountController do
         |> put_flash(:info, "Account created successfully.")
         |> redirect(to: account_path(conn, :index))
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset, account_map: account_map)
+        render(conn, "new.html", changeset: changeset, account_map: account_map, user_id: user_id)
     end
   end
 
@@ -40,26 +41,28 @@ defmodule Dosh.AccountController do
   end
 
   def edit(conn, %{"id" => id}) do
+    user_id = Dosh.User.user_id conn
+    account_map = Dosh.User.account_map conn
     account = Repo.get!(Account, id)
-    accounts = Dosh.User.accounts(conn)
-    account_map = Enum.zip(Enum.map(accounts, &(&1.name)), Enum.map(accounts, &(&1.id)))
     changeset = Account.changeset(account)
     conn
     |> assign(:user_id, Addict.Helper.current_user(conn).id)
-    |> render("edit.html", account: account, changeset: changeset, account_map: account_map)
+    |> render("edit.html", account: account, changeset: changeset, account_map: account_map, user_id: user_id)
   end
 
   def update(conn, %{"id" => id, "account" => account_params}) do
+    user_id = Dosh.User.user_id conn
     account = Repo.get!(Account, id)
+    account_map = Dosh.User.account_map conn
     changeset = Account.changeset(account, account_params)
 
     case Repo.update(changeset) do
       {:ok, account} ->
         conn
         |> put_flash(:info, "Account updated successfully.")
-        |> redirect(to: account_path(conn, :show, account))
+        |> redirect(to: page_path(conn, :index))
       {:error, changeset} ->
-        render(conn, "edit.html", account: account, changeset: changeset)
+        render(conn, "edit.html", account: account, changeset: changeset, user_id: user_id, account_map: account_map)
     end
   end
 

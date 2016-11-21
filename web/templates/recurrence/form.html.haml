@@ -41,7 +41,7 @@
   .row
     .col.s12
       .input-field
-        = date_select f, :start_date, value: Ecto.Date.utc, builder: fn b ->
+        = date_select f, :start_date, value: @date, builder: fn b ->
           .row
             .col.s3
               = b.(:day, [])

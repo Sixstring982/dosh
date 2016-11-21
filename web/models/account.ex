@@ -29,7 +29,7 @@ defmodule Dosh.Account do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:name, :credit, :day_of_month, :user_id, :payee_account_id])
-    |> validate_required([:name, :credit, :day_of_month, :user_id])
+    |> validate_required([:name, :user_id])
   end
 
   defp daily_total(struct, date, current_total, transactions, recurrences) do
