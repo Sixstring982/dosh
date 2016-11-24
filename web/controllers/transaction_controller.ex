@@ -15,6 +15,7 @@ defmodule Dosh.TransactionController do
   end
 
   def create(conn, %{"transaction" => transaction_params}) do
+    IO.inspect(transaction_params)
     account_map = Dosh.User.account_map conn
     changeset = Transaction.changeset(%Transaction{}, transaction_params)
 
@@ -58,12 +59,18 @@ defmodule Dosh.TransactionController do
   def delete(conn, %{"id" => id}) do
     transaction = Repo.get!(Transaction, id)
 
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
-    Repo.delete!(transaction)
+    if !Transaction.is_owned_by_current_user(transaction, conn) do
+      conn
+      |> put_flash(:danger, "You don't own the account you wish to delete.")
+      |> redirect(to: transaction_path(conn, :index))
+    else
+      # Here we use delete! (with a bang) because we expect
+      # it to always work (and if it does not, it will raise).
+      Repo.delete!(transaction)
 
-    conn
-    |> put_flash(:info, "Transaction deleted successfully.")
-    |> redirect(to: transaction_path(conn, :index))
+      conn
+      |> put_flash(:info, "Transaction deleted successfully.")
+      |> redirect(to: transaction_path(conn, :index))
+    end
   end
 end

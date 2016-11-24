@@ -26,3 +26,7 @@ p.alert.alert-danger {
     background-color: #ffcdd2;
     color: #c62828;
 }
+
+.hidden {
+    display: none;
+}

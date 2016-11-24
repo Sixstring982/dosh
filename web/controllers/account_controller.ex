@@ -37,7 +37,8 @@ defmodule Dosh.AccountController do
 
   def show(conn, %{"id" => id}) do
     account = Repo.get!(Account, id)
-    render(conn, "show.html", account: account)
+    transactions = Account.transactions(account)
+    render(conn, "show.html", account: account, transactions: transactions)
   end
 
   def edit(conn, %{"id" => id}) do

@@ -14,7 +14,10 @@
               %ul.collection
                 = for account <- @accounts do
                   %li.collection-item
-                    %span.title= account.name
+                    %span.title
+                      = link to: account_path(@conn, :show, account) do
+                        = account.name
+                      = end
                     .secondary-content
                       = link to: account_path(@conn, :edit, account) do
                         %i.material-icons mode_edit
