@@ -26,3 +26,4 @@ import datepicker from './datepicker';
 import recurrenceForm from './recurrence-form';
 import alertDismiss from './alert-dismiss';
 import rebalance from './rebalance';
+import accountForm from './account_form';

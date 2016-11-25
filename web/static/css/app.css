@@ -30,3 +30,7 @@ p.alert.alert-danger {
 .hidden {
     display: none;
 }
+
+.hidden-text-overflow {
+    text-overflow: ellipsis;
+}

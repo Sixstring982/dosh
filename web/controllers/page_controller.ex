@@ -1,15 +1,21 @@
 defmodule Dosh.PageController do
   use Dosh.Web, :controller
   alias Dosh.Account
+  alias Dosh.Transaction
+  alias Dosh.User
 
   plug Addict.Plugs.Authenticated when action in [:index]
 
   def index(conn, _params) do
-    accounts = Dosh.User.accounts conn
-    recurrences = Dosh.User.recurrences conn
+    accounts = User.accounts conn
+    recurrences = User.recurrences conn
+    account_map = User.account_map conn
+    quick_transaction_changeset = Transaction.changeset(%Transaction{})
     conn
     |> assign(:accounts, accounts)
     |> assign(:recurrences, recurrences)
+    |> assign(:account_map, account_map)
+    |> assign(:quick_transaction_changeset, quick_transaction_changeset)
     |> render("index.html")
   end
 

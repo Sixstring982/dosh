@@ -14,19 +14,21 @@
   .row
     .col.s12
       .input-field
-        = select f, :payee_account_id, @account_map, prompt: "Choose a payee account"
-  .row
-    .col.s12
-      .input-field
         = checkbox f, :credit
         = label f, :credit
         = error_tag f, :credit
 
   .row
     .col.s12
-      .input-field
-        = number_input f, :day_of_month, min: "0", step: "1"
-        = label f, :day_of_month
+      .input-field.credit-only.hidden
+        = select f, :payee_account_id, @account_map, prompt: "Choose a payee account"
+        = label f, :payee_account_id, "Payee account"
+
+  .row
+    .col.s12
+      .input-field.credit-only.hidden
+        = number_input f, :day_of_month, min: "1", max: "31", step: "1"
+        = label f, :day_of_month, "Day of month when payment is due"
         = error_tag f, :day_of_month
 
   .input-field
