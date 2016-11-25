@@ -4,9 +4,6 @@ export const renderChart = (fromDate, toDate) => {
 
     if (document.getElementById(rootId)) {
         $.ajax({url: url, method: 'GET'}).done(e => {
-            console.log(fromDate);
-            console.log(toDate);
-            console.log(e);
             const chart = Highcharts.chart('forecast-root', e);
         });
     }
