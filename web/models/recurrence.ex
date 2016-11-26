@@ -1,5 +1,7 @@
 defmodule Dosh.Recurrence do
   use Dosh.Web, :model
+  alias Dosh.Account
+  alias Dosh.Repo
 
   schema "recurrences" do
     field :name, :string
@@ -35,5 +37,11 @@ defmodule Dosh.Recurrence do
   defp date_to_days(date) do
     %{year: year, month: month, day: day} = date
     :calendar.date_to_gregorian_days year, month, day
+  end
+
+  def account(struct) do
+    [account | _] = Repo.all(from a in Account,
+                             where: a.id == ^struct.account_id)
+    account
   end
 end

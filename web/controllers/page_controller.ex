@@ -8,12 +8,12 @@ defmodule Dosh.PageController do
 
   def index(conn, _params) do
     accounts = User.accounts conn
-    recurrences = User.recurrences conn
+    recurrence_count = length (User.recurrences conn)
     account_map = User.account_map conn
     quick_transaction_changeset = Transaction.changeset(%Transaction{})
     conn
     |> assign(:accounts, accounts)
-    |> assign(:recurrences, recurrences)
+    |> assign(:recurrence_count, recurrence_count)
     |> assign(:account_map, account_map)
     |> assign(:quick_transaction_changeset, quick_transaction_changeset)
     |> render("index.html")

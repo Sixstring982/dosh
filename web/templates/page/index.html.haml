@@ -57,22 +57,8 @@
             %span.card-title
               .row
                 .col.s10 Recurring Transactions
-                .col.s2
-                  %a.btn-floating.btn-med.waves-effect.waves-light.red{href: "recurrences/new"}
-                    %i.material-icons add
-            %ul.collection
-              = for recurrence <- @recurrences do
-                %li.collection-item
-                  .row
-                    .col.l6.s6.hidden-text-overflow= recurrence.name
-                    .col.l5.s6
-                      $
-                      = recurrence.amount
-                    .col.l1.s1.offset-s11
-                      = link to: recurrence_path(@conn, :edit, recurrence) do
-                        %i.material-icons mode_edit
-                      = end
-              = end
+          .card-action
+            = link "View All #{@recurrence_count}", to: recurrence_path(@conn, :index)
 
   .col.l8.s12
     .card.white.black-text

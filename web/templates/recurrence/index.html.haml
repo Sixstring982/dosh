@@ -1,0 +1,32 @@
+.container
+  .row
+    .col.s12
+      .card.white.black-text
+        .card-content
+          .row
+            .col.l11.s12
+              %span.card-title Recurring Transactions
+            .col.l1.s12
+              = link to: recurrence_path(@conn, :new), class: "btn-floating btn-large waves-effect waves-light red" do
+                %i.material-icons.circle add
+              = end
+          .row
+            .col.s12
+              %ul.collection
+                = for recurrence <- @recurrences do
+                  %li.collection-item
+                    .row
+                      .col.s2= recurrence.name
+                      .col.s2
+                        $
+                        = recurrence.amount
+                      .col.s2= Dosh.Recurrence.account(recurrence).name
+                      .col.s1.offset-s4
+                        = link to: recurrence_path(@conn, :edit, recurrence) do
+                          %i.material-icons mode_edit
+                        = end
+                      .col.s1
+                        = link to: recurrence_path(@conn, :delete, recurrence), method: :delete, data: [confirm: "Are you sure?"] do
+                          %i.material-icons delete
+                        = end
+                = end
