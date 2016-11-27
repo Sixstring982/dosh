@@ -25,34 +25,38 @@
         = error_tag f, :account_id
 
   .row
-    .col.s12
-      .input-field
-        = number_input f, :day_of_month
-        = label f, :day_of_month
-        = error_tag f, :day_of_month
+    .col.s12.input-field
+      %select#period-select
+        %option#period-choose{value: "choose", disabled: "", selected: ""} Choose Recurrence Period
+        %option#period-monthly{value: "monthly"} Monthly
+        %option#period-n-days{value: "n-days"} Every n days
 
-  .row
-    .col.s12
-      .input-field
-        = number_input f, :repeat_period
-        = label f, :repeat_period
-        = error_tag f, :repeat_period
+  .row.hidden.monthly-only
+    .col.s12.input-field
+      = number_input f, :day_of_month
+      = label f, :day_of_month
+      = error_tag f, :day_of_month
 
-  .row
-    .col.s12
-      .input-field
-        = date_select f, :start_date, value: @date, builder: fn b ->
-          .row
-            .col.s3
-              = b.(:day, [])
-            .col.s1 /
-            .col.s3
-              = b.(:month, [])
-            .col.s1 /
-            .col.s3
-              = b.(:year, [])
-        = end
-        = error_tag f, :start_date
+  .row.hidden.n-days-only
+    .col.s12.input-field
+      = number_input f, :repeat_period
+      = label f, :repeat_period, "Repeat period (every two weeks = 14, weekly = 7, etc.)"
+      = error_tag f, :repeat_period
+
+  .row.hidden.n-days-only
+    .col.s12.input-field
+      = date_select f, :start_date, value: @date, builder: fn b ->
+        .row
+          .col.s3
+            = b.(:day, [])
+          .col.s1 /
+          .col.s3
+            = b.(:month, [])
+          .col.s1 /
+          .col.s3
+            = b.(:year, [])
+      = end
+      = error_tag f, :start_date
 
   .row
     .col.s12
